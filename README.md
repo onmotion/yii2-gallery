@@ -24,3 +24,14 @@ to the require section of your `composer.json` file.
 
 Usage
 -----
+
+You must add to your config:
+```
+'modules' => [
+		//...
+        'gallery' => [
+            'class' => 'onmotion\gallery\Module',
+        ],
+        //...
+    ]
+```
