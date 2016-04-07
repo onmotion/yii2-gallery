@@ -43,7 +43,7 @@ class GalleryPhoto extends \yii\db\ActiveRecord
         return [
             'photo_id' => 'ID',
             'gallery_id' => 'Gallery_ID',
-            'name' => 'Название',
+            'name' => 'Name',
         ];
     }
 

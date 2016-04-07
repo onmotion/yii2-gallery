@@ -2,7 +2,7 @@
     "name": "onmotion/yii2-gallery",
     "description": "blueimp gallery with fileupload in your Yii2 application",
     "type": "yii2-extension",
-    "keywords": ["yii2"," gallery"," widget"," blueimp"],
+    "keywords": ["yii2"," gallery"," module"," blueimp"],
     "license": "GPL-3.0",
     "authors": [
         {

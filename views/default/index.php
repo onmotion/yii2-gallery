@@ -2,8 +2,6 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
-use johnitvn\ajaxcrud\CrudAsset; 
-use johnitvn\ajaxcrud\BulkButtonWidget;
 
 /* @var $this yii\web\View */
 /* @var $searchModel onmotion\gallery\models\GallerySearch */

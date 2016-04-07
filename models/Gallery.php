@@ -44,9 +44,9 @@ class Gallery extends ActiveRecord
     {
         return [
             'gallery_id' => 'ID',
-            'name' => 'Название',
-            'descr' => 'Описание',
-            'date' => 'Дата',
+            'name' => 'Gallery name',
+            'descr' => 'Description',
+            'date' => 'Date',
         ];
     }
     public function getGalleryPhotos()

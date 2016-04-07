@@ -19,9 +19,6 @@ ini_set('memory_limit', '512M');
 $this->params['breadcrumbs'][] = ['label' => 'Gallery', 'url' => ['/gallery']];
 $this->params['breadcrumbs'][] = $model->name;
 
-$this->registerJsFile('@web/js/gallery.js', ['depends' => [
-    'yii\web\YiiAsset',
-]]);
 $this->registerJs(<<<JS
 $('#preloader').show();
 $('body').css('overflow', 'hidden');
@@ -29,16 +26,10 @@ window.onload = function() {
 	$('body').css('overflow', 'auto');
     $('#preloader').hide();
   };
+   $("[data-toggle='tooltip']").tooltip();
 JS
 );
-?>
-    <div class="container">
-        <div class="gallery-view">
-            <?php
-
-            echo Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]);
+            echo Html::beginTag('div', ['class' => 'gallery-view']);
             echo \yii\bootstrap\Collapse::widget([
                 'items' => [
                     [
@@ -92,7 +83,7 @@ JS
                         'label' => 'Upload photo',
                         'content' => FileInput::widget([
                                 'name' => 'image[]',
-                                'language' => 'ru',
+                                'language' => 'en',
                                 'options' => [
                                     'multiple' => true,
                                 ],
@@ -132,32 +123,29 @@ JS
                 echo Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['#'],
                     ['title' => 'Reset', 'class' => 'btn btn-default', 'style' => "display:none", 'id' => 'reset-all',
                         'data-toggle' => "tooltip", 'data-placement' => "top", 'data-trigger' => "hover"]);
-                echo Html::a('<i class="glyphicon glyphicon-trash"></i>', ['photos-delete'],
+                echo Html::a('<i class="glyphicon glyphicon-trash"></i>', Url::toRoute('photos-delete'),
                     ['title' => 'Delete photos', 'class' => 'btn btn-danger', 'style' => "display:none", 'id' => 'photos-delete-btn',
-                        'method' => 'post',
+                        'data-toggle' => "tooltip", 'data-placement' => "top", 'data-trigger' => "hover",
                         'role' => 'modal-toggle',
                         'data-modal-title'=>'Delete photos',
                         'data-modal-body'=>'Are you sure?',
                     ]);
+echo Html::endTag('div');
 
-            ?>
-
-
-        </div>
-    </div>
-
-<?php Modal::begin([
+Modal::begin([
     "id" => "gallery-modal",
     'header' => '<h4 class="modal-title"></h4>',
     "footer" =>
         Html::a('Close', ['#'],
             ['title' => 'Cancel', 'class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) .
-        Html::a('ОК', Url::to('photos-delete'),
+        Html::a('ОК', Url::toRoute('photos-delete'),
             ['title' => '', 'class' => 'btn btn-primary', 'id' => 'photos-delete-confirm-btn']),
 ]);
+
+Modal::end();
 
 echo Html::beginTag('div', ['class' => 'preloader']);
 echo Html::tag('div', Html::tag('span', '100', ['class' => 'sr-only']), ['class'=>"progress-bar progress-bar-striped active", 'role'=>"progressbar",
     'aria-valuenow'=>"100", 'aria-valuemin'=>"0", 'aria-valuemax'=>"100", 'style'=>"width:100%"]);
 echo Html::endTag('div');
-Modal::end(); ?>
+?>

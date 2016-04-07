@@ -106,7 +106,6 @@ class DefaultController extends Controller
     {
 
         $photos = GalleryPhoto::find()->where(['gallery_id' => $id])->all();
-        $uploadModel = new GalleryPhoto();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
