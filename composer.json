@@ -2,7 +2,7 @@
     "name": "onmotion/yii2-gallery",
     "description": "blueimp gallery with fileupload in your Yii2 application",
     "type": "yii2-extension",
-    "keywords": ["yii2"," gallery"," module"," blueimp"],
+    "keywords": ["yii2","gallery","module","blueimp","photo"],
     "license": "GPL-3.0",
     "authors": [
         {
@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "*",
+        "yiisoft/yii2": ">=2.0.1",
         "bower-asset/blueimp-gallery": "~2.15.0",
         "onmotion/yii2-helpers": "*",
         "kartik-v/yii2-widget-fileinput": "v1.0.3"
