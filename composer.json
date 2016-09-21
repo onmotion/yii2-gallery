@@ -16,6 +16,7 @@
         "yiisoft/yii2": ">=2.0.1",
         "bower-asset/blueimp-gallery": "~2.15.0",
         "onmotion/yii2-helpers": "*",
+        "kartik-v/bootstrap-fileinput": "4.3.4",
         "kartik-v/yii2-widget-fileinput": ">=v1.0.5"
     },
     "autoload": {
