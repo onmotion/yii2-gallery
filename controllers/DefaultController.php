@@ -8,9 +8,12 @@ use onmotion\gallery\models\Gallery;
 use onmotion\gallery\models\GalleryPhoto;
 use onmotion\gallery\models\GallerySearch;
 use onmotion\helpers\File;
+use onmotion\helpers\Image;
 use onmotion\helpers\ImagickExt;
 use onmotion\helpers\Translator;
 use Yii;
+use yii\base\Exception;
+use yii\base\UserException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -63,24 +66,72 @@ class DefaultController extends Controller
             $imageTmpName = $_FILES["image"]["tmp_name"][0];
             $pathinfo = pathinfo($_FILES["image"]["name"][0]);
             $imageName = uniqid() . '.' . $pathinfo['extension'];
-            $imagick = new Imagick($imageTmpName);
-            $ratio = $imagick->getImageWidth() / $imagick->getImageHeight();
-            $width = 1500;
-            if ($imagick->getImageWidth() < $width)
-                $width = $imagick->getImageWidth();
-            $height = round($width / $ratio);
+            list($width, $height) = getimagesize($imageTmpName);
+
+            $ratio = $width / $height;
+            $newWidth = ($width < 1500) ? $width : 1500;
+            $newHeight = round($newWidth / $ratio);
             try {
                 $filepath = Yii::getAlias('@app/web/img/gallery/' . Translator::rus2translit(Html::encode($extraData['gallery_name'])) . '/' . $imageName);
                 $thumbPath = Yii::getAlias('@app/web/img/gallery/' . Translator::rus2translit(Html::encode($extraData['gallery_name'])) . '/thumb/' . $imageName);
-                $imagick->thumbnailImage($width, $height);
-                ImagickExt::autorotate($imagick);
-                $imagick->writeImage($filepath);
-                $imagick->setImageCompression(Imagick::COMPRESSION_JPEG);
-                $imagick->setImageCompressionQuality(60);
-                $imagick->cropThumbnailImage(100, 100);
-                $imagick->writeImage($thumbPath);
+
+                $imageType = 'undefined';
+                $image_p = imagecreatetruecolor($newWidth, $newHeight);
+                $image_t = imagecreatetruecolor(110, 110);
+                try {
+                    $image = imagecreatefrompng($imageTmpName);
+                    $imageType = 'png';
+                } catch (\Exception $e){
+                    try {
+                        $image = imagecreatefromjpeg($imageTmpName);
+                        $imageType = 'jpeg';
+                    } catch (\Exception $e){
+                        try {
+                            $image = imagecreatefromgif($imageTmpName);
+                            $imageType = 'gif';
+                        } catch (\Exception $e){
+                            throw new Exception($e->getMessage());
+                        }
+                    }
+                }
+
+                imagecopyresized($image_p, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+                $w = 110;
+                $h = 110;
+
+                    if ($width > $height) {
+                        $r = $width / $height;
+                        imagecopyresampled($image_t, $image, 0, 0, 0, 0, ($w*$r), $h, $width, $height);
+                    } else {
+                        $r = $height/$width;
+                        imagecopyresampled($image_t, $image, 0, 0, 0, 0, $w, ($h*$r), $width, $height);
+                    }
+
+                try {
+                    Image::fix_orientation($image_p, $imageTmpName);
+                    Image::fix_orientation($image_t, $imageTmpName);
+                } catch (\Exception $e){}
+                switch ($imageType){
+                    case 'png':
+                        imagepng($image_p, $filepath);
+                        imagepng($image_t, $thumbPath);
+                        break;
+                    case 'jpeg':
+                        imagejpeg($image_p, $filepath);
+                        imagejpeg($image_t, $thumbPath);
+                        break;
+                    case 'gif':
+                        imagegif($image_p, $filepath);
+                        imagegif($image_t, $thumbPath);
+                        break;
+                    default:
+                        throw new UserException('unknown image type');
+                        break;
+                }
+
             } catch (\Exception $e){
-                return ('Upload error: ' . $e->getMessage());
+                throw new UserException('Upload error: ' . $e->getMessage());
             }
             try {
                 $model->gallery_id = $extraData['gallery_id'];
