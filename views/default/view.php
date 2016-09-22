@@ -103,6 +103,9 @@ JS
                                     ],
                                     'elErrorContainer' => '#errorBlock'
                                 ],
+                                'pluginEvents' => [
+                                    'fileuploaded' => NEW \yii\web\JsExpression("function(e){location.reload();}")
+                                ],
                             ]) .
                             ' <div id="errorBlock">
                          <ul class="alert-warning-message"></ul>
