@@ -49,6 +49,8 @@
     width: 100%;
     height: 100%;
     display: block; }
+#gallery-listview .gallery-item .image .image-wrap img{
+    width: 100px;  }
 #gallery-listview .gallery-item .image:hover {
     -webkit-transform: scale(1.03);
     -ms-transform: scale(1.03);

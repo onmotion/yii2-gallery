@@ -147,7 +147,7 @@ $(document).on('ready', function() {
              
     });
     
-    $('#input-1a').on('fileuploaded', function(event, data, previewId, index) {
+    $('#input-1a').on('fileunlock', function(event, data, previewId, index) {
         location.reload();
     });
 });

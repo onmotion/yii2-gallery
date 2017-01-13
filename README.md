@@ -52,7 +52,7 @@ If you want change the view, you can add to your config:
         'view' => [
             'theme' => [
                 'pathMap' => [
-                    '@vendor/onmotion/yii2-gallery/views' => '@app/views/gallery', // example: @app/views/gallery/default/index.php
+                    '@vendor/onmotion/yii2-gallery/views/default' => '@app/views/gallery', // example: @app/views/gallery/default/index.php
                 ],
             ],
         ],
