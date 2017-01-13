@@ -81,35 +81,8 @@ JS
                 'items' => [
                     [
                         'label' => 'Upload photo',
-                        'content' => FileInput::widget([
-                                'name' => 'image[]',
-                                'language' => 'en',
-                                'options' => [
-                                    'multiple' => true,
-                                ],
-                                'pluginOptions' => [
-                                    'showPreview' => false,
-                                    'uploadUrl' => Url::to(['fileupload']),
-                                    'uploadExtraData' => [
-                                        'gallery_id' => $model->gallery_id,
-                                        'gallery_name' => $model->name,
-                                    ],
-                                    'allowedFileExtensions' => ["jpg", "png"],
-                                    'allowedFileTypes' => ['image'],
-                                    'maxFileCount' => 1000,
-                                    'maxFileSize' => 15000,
-                                    'messageOptions' => [
-                                        'class' => 'alert-warning-message'
-                                    ],
-                                    'elErrorContainer' => '#errorBlock'
-                                ],
-                                'pluginEvents' => [
-                                    'fileuploaded' => NEW \yii\web\JsExpression("function(e){location.reload();}")
-                                ],
-                            ]) .
-                            ' <div id="errorBlock">
-                         <ul class="alert-warning-message"></ul>
-                         </div>'
+                        'content' => '<input id="input-1a" name="image[]" type="file"  class="file-loading" multiple>' .
+                            ' <div id="errorBlock"><ul class="alert-warning-message"></ul></div>'
                     ]
                 ],
                 'options' => [
@@ -151,4 +124,33 @@ echo Html::beginTag('div', ['class' => 'preloader']);
 echo Html::tag('div', Html::tag('span', '100', ['class' => 'sr-only']), ['class'=>"progress-bar progress-bar-striped active", 'role'=>"progressbar",
     'aria-valuenow'=>"100", 'aria-valuemin'=>"0", 'aria-valuemax'=>"100", 'style'=>"width:100%"]);
 echo Html::endTag('div');
+
+
+$this->registerJs(<<<JS
+
+$(document).on('ready', function() {
+    $("#input-1a").fileinput({
+    showPreview: false,
+    uploadUrl: 'fileupload',
+    uploadAsync: true,
+    uploadExtraData: {
+       'gallery_id': "$model->gallery_id",
+       'gallery_name': "$model->name",
+    },
+    maxFileCount: 1000,
+    allowedFileTypes: ['image'],
+    allowedFileExtensions: ['jpg', 'png'],
+    messageOptions: {
+       'class': 'alert-warning-message'
+    },
+    elErrorContainer: '#errorBlock'
+             
+    });
+    
+    $('#input-1a').on('fileuploaded', function(event, data, previewId, index) {
+        location.reload();
+    });
+});
+JS
+);
 ?>

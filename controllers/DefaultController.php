@@ -58,14 +58,13 @@ class DefaultController extends Controller
 
     public function actionFileupload()
     {
-
         $extraData = Yii::$app->request->post();
         $model = new GalleryPhoto();
 
         if (!empty($_FILES) && $_FILES['image']['error'][0] == 0) {
             $imageTmpName = $_FILES["image"]["tmp_name"][0];
             $pathinfo = pathinfo($_FILES["image"]["name"][0]);
-            $imageName = uniqid() . '.' . $pathinfo['extension'];
+            $imageName = $pathinfo['filename'] . uniqid() . '.' . $pathinfo['extension'];
             list($width, $height) = getimagesize($imageTmpName);
 
             $ratio = $width / $height;
@@ -156,7 +155,7 @@ class DefaultController extends Controller
     public function actionView($id)
     {
 
-        $photos = GalleryPhoto::find()->where(['gallery_id' => $id])->all();
+        $photos = GalleryPhoto::find()->where(['gallery_id' => $id])->orderBy('name')->all();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
