@@ -21,10 +21,6 @@ class Module extends \yii\base\Module
         $view = \Yii::$app->getView();
         GalleryAsset::register($view);
         OnmotionAsset::register($view);
-        //route doesn't work
-        \Yii::$app->getUrlManager()->addRules([
-            '<module:gallery>/<action>' => 'gallery/default/<action>',
-        ], false);
     }
 
 }
