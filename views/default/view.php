@@ -128,26 +128,30 @@ echo Html::endTag('div');
 
 $this->registerJs(<<<JS
 
-$(document).on('ready', function() {
-    $("#input-1a").fileinput({
-    showPreview: false,
-    uploadUrl: 'fileupload',
-    uploadAsync: true,
-    uploadExtraData: {
-       'gallery_id': "$model->gallery_id",
-       'gallery_name': "$model->name",
-    },
-    maxFileCount: 1000,
-    allowedFileTypes: ['image'],
-    allowedFileExtensions: ['jpg', 'png'],
-    messageOptions: {
-       'class': 'alert-warning-message'
-    },
-    elErrorContainer: '#errorBlock'
-             
+$(document).ready(function() {
+    var inputField = $("#input-1a");
+    if (!inputField) {
+        console.log('input field not found.');
+        return;
+    } 
+    inputField.fileinput({
+        showPreview: false,
+        uploadUrl: 'fileupload',
+        uploadAsync: true,
+        uploadExtraData: {
+           'gallery_id': "$model->gallery_id",
+           'gallery_name': "$model->name",
+        },
+        maxFileCount: 1000,
+        allowedFileTypes: ['image'],
+        allowedFileExtensions: ['jpg', 'png'],
+        messageOptions: {
+           'class': 'alert-warning-message'
+        },
+        elErrorContainer: '#errorBlock'
     });
     
-    $('#input-1a').on('fileunlock', function(event, data, previewId, index) {
+    inputField.on('fileunlock', function(event, data, previewId, index) {
         location.reload();
     });
 });

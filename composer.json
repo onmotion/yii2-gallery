@@ -15,6 +15,7 @@
     "require": {
         "yiisoft/yii2": ">=2.0.1",
         "bower-asset/blueimp-gallery": ">=v2.17.0",
+        "npm-asset/bootstrap-fileinput": "^5.0",
         "onmotion/yii2-helpers": "*"
     },
     "autoload": {

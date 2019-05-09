@@ -19,8 +19,9 @@ class Module extends \yii\base\Module
     {
         parent::init();
         $view = \Yii::$app->getView();
+        FileInputAsset::register($view);
         GalleryAsset::register($view);
-        OnmotionAsset::register($view);
+        ModuleAsset::register($view);
     }
 
 }

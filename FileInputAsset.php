@@ -14,16 +14,16 @@ use yii\web\AssetBundle;
  * Class GalleryAsset
  * @package onmotion\gallery
  */
-class GalleryAsset extends AssetBundle
+class FileInputAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/blueimp-gallery';
+    public $sourcePath = '@npm/bootstrap-fileinput';
     public $css = [
-        'css/blueimp-gallery.min.css',
+        'css/fileinput.min.css',
     ];
     public $js = [
-        'js/blueimp-gallery.min.js',
+        'js/fileinput.min.js',
     ];
     public $depends = [
-        'onmotion\gallery\FileInputAsset',
+        'yii\web\YiiAsset',
     ];
 }
