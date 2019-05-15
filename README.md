@@ -2,6 +2,11 @@ Yii2 Gallery module
 ===================
 blueimp gallery in your Yii2 application with fileupload
 
+[![Latest Stable Version](https://poser.pugx.org/onmotion/yii2-gallery/v/stable)](https://packagist.org/packages/onmotion/yii2-gallery)
+[![Total Downloads](https://poser.pugx.org/onmotion/yii2-gallery/downloads)](https://packagist.org/packages/onmotion/yii2-gallery)
+[![Monthly Downloads](https://poser.pugx.org/onmotion/yii2-gallery/d/monthly)](https://packagist.org/packages/onmotion/yii2-gallery)
+[![License](https://poser.pugx.org/onmotion/yii2-gallery/license)](https://packagist.org/packages/onmotion/yii2-gallery)
+
 Installation
 ------------
 
