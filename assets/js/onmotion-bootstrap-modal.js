@@ -72,39 +72,34 @@ $(document).ready(function () {
     });
     
     var form = $modal.find('form');
-    $(document).on("submit", form, function(e){
-        
-        // do not preventDefault and send ajax if no form found
-        if (form.length) {
-            e.preventDefault();
-
-            $.ajax({
-                type: 'post',
-                url: form.attr('action'),
-                data: form.serialize(),
-                dataType: 'json',
-                beforeSend: function () {
-                    $modal.find('.modal-body').html(progressBar);
-                },
-                success: function (data) {
-                    $modal.find('.modal-title').text(data.title);
-                    $modal.find('.modal-body').html(data.content);
-                    if(data.forceClose == true)
-                        $modal.modal('hide');
-                    if(data.forceReload == true)
-                        location.reload();
-                    if(data.hideActionButton == true)
-                        $('#modal-confirm-btn').hide();
-                    return false;
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    console.log(xhr);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                    $modal.find('.modal-body').text(errorThrown);
-                }
-            });
-            return false;
-        }
-    })
+    $(document).on("submit", '#gallery-modal form', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'post',
+            url: form.attr('action'),
+            data: form.serialize(),
+            dataType: 'json',
+            beforeSend: function () {
+                $modal.find('.modal-body').html(progressBar);
+            },
+            success: function (data) {
+                $modal.find('.modal-title').text(data.title);
+                $modal.find('.modal-body').html(data.content);
+                if(data.forceClose == true)
+                    $modal.modal('hide');
+                if(data.forceReload == true)
+                    location.reload();
+                if(data.hideActionButton == true)
+                    $('#modal-confirm-btn').hide();
+                return false;
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log(xhr);
+                console.log(textStatus);
+                console.log(errorThrown);
+                $modal.find('.modal-body').text(errorThrown);
+            }
+        });
+        return false;
+    });
 });
