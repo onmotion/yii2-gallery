@@ -71,9 +71,10 @@ $(document).ready(function () {
         return false;
     });
     
-    var form = $modal.find('form');
+    
     $(document).on("submit", '#gallery-modal form', function(e){
         e.preventDefault();
+        var form = $modal.find('form');
         $.ajax({
             type: 'post',
             url: form.attr('action'),
