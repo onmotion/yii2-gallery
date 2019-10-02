@@ -152,6 +152,7 @@ $(document).ready(function() {
     });
     
     inputField.on('fileunlock', function(event, data, previewId, index) {
+        inputField.fileinput('upload');
         location.reload();
     });
 });
