@@ -38,7 +38,7 @@ $date = new DateTime($model->date);
         <a class="image-wrap" href="<?= Url::toRoute(["view", 'id'=>$model->gallery_id]) ?>">
             <?php
             foreach($model->galleryPhotos as $prevPhoto){
-                echo \yii\helpers\Html::img('/img/gallery/' . Translator::rus2translit($model->name) . '/thumb/' . $prevPhoto->name);
+                echo \yii\helpers\Html::img(Yii::getAlias('@web') . '/img/gallery/' . Translator::rus2translit($model->name) . '/thumb/' . $prevPhoto->name);
             };
             ?>
         </a>
