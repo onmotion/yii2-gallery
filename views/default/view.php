@@ -22,11 +22,11 @@ $this->params['breadcrumbs'][] = $model->name;
 $this->registerJs(<<<JS
 $('#preloader').show();
 $('body').css('overflow', 'hidden');
-window.onload = function() {
-	$('body').css('overflow', 'auto');
+$(document).ready(function() { 
+    $('body').css('overflow', 'auto');
     $('#preloader').hide();
-  };
-   $("[data-toggle='tooltip']").tooltip();
+});
+$("[data-toggle='tooltip']").tooltip();
 JS
 );
             echo Html::beginTag('div', ['class' => 'gallery-view']);
@@ -47,8 +47,8 @@ JS
                 foreach ($photos as $photo) {
                     $items[] =
                         [
-                            'original' => '/img/gallery/' . Translator::rus2translit($galleryName) . '/' . $photo->name,
-                            'thumbnail' => '/img/gallery/' . Translator::rus2translit($galleryName) . '/thumb/' . $photo->name,
+                            'original' => Yii::getAlias('@web') . '/img/gallery/' . Translator::rus2translit($galleryName) . '/' . $photo->name,
+                            'thumbnail' => Yii::getAlias('@web') . '/img/gallery/' . Translator::rus2translit($galleryName) . '/thumb/' . $photo->name,
                             'options' => [
                                 'title' => $galleryName,
                                 'data-id' => $photo->photo_id,
