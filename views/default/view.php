@@ -138,6 +138,7 @@ $(document).ready(function() {
         showPreview: false,
         uploadUrl: 'fileupload',
         uploadAsync: true,
+        showUpload: false,
         uploadExtraData: {
            'gallery_id': "$model->gallery_id",
            'gallery_name': "$model->name",
@@ -149,19 +150,13 @@ $(document).ready(function() {
            'class': 'alert-warning-message'
         },
         elErrorContainer: '#errorBlock'
+    }).on("filebatchselected", function(event, files) {
+        inputField.fileinput("upload");
     });
+
     
     inputField.on('fileunlock', function(event, filestack, extraData) {
-        var fstack = [];
-        $.each(filestack, function(fileId, file) {
-            if (file) {
-                fstack.push(file);
-            }
-        });
-        
-        if (fstack.length === 0) {
-            location.reload();
-        }
+        location.reload();
     });
 });
 JS
