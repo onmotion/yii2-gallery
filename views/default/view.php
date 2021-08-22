@@ -151,8 +151,17 @@ $(document).ready(function() {
         elErrorContainer: '#errorBlock'
     });
     
-    inputField.on('fileunlock', function(event, data, previewId, index) {
-        location.reload();
+    inputField.on('fileunlock', function(event, filestack, extraData) {
+        var fstack = [];
+        $.each(filestack, function(fileId, file) {
+            if (file) {
+                fstack.push(file);
+            }
+        });
+        
+        if (fstack.length === 0) {
+            location.reload();
+        }
     });
 });
 JS
