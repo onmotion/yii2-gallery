@@ -153,7 +153,6 @@ $(document).ready(function() {
     }).on("filebatchselected", function(event, files) {
         inputField.fileinput("upload");
     });
-
     
     inputField.on('fileunlock', function(event, filestack, extraData) {
         location.reload();
